@@ -1,19 +1,36 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function AddItem() {
-  return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      <TextField id="filled-basic" label="Filled" variant="filled" />
-      <TextField id="standard-basic" label="Standard" variant="standard" />
-    </Box>
-  );
+    const [inputValue, setInputValue] = useState('');
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(inputValue);
+    };
+
+    return (
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+        >
+            <TextField
+                id="outlined-basic"
+                label="Outlined"
+                variant="outlined"
+                value={inputValue}
+                onChange={handleChange}
+            />
+        </Box>
+    );
 }

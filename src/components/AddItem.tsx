@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 export default function AddItem() {
     const [inputValue, setInputValue] = useState('');
@@ -12,6 +13,7 @@ export default function AddItem() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(inputValue);
+        axios.put("http://localhost:8080/api/pantry/123456", [inputValue])
     };
 
     return (
@@ -26,7 +28,7 @@ export default function AddItem() {
         >
             <TextField
                 id="outlined-basic"
-                label="Outlined"
+                label="Add Pantry Item"
                 variant="outlined"
                 value={inputValue}
                 onChange={handleChange}

@@ -1,15 +1,16 @@
+import { HashRouter as Router } from 'react-router-dom';
 import './App.css';
-import AddItem from './components/AddItem';
 import NavBar from './components/NavBar';
-import RecipeCard from './components/RecipeCard';
+import routes from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <RecipeCard />
-      <AddItem />
-    </div>
+    <Router basename='/'>
+      <div className="App">
+        <NavBar />
+        {routes()}
+      </div>
+    </Router>
   );
 }
 

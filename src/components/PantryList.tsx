@@ -1,55 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, TextField } from '@mui/material';
+import { PantryApiService } from '../services/PantryApiService';
 
-interface Item {
-    id: number;
-    thumbnail: string;
-    name: string;
-    quantity: number;
-    unit: string;
-}
 
-interface Props {
-    items: Item[];
-}
-
-const handleIncrement = (item: Item) => {
+const handleIncrement = (item: any) => {
     console.log(`Incrementing ${item.name}`);
+    console.log(`New quantity: ${item.quantity + 1}`);
 };
 
-const handleDecrement = (item: Item) => {
+const handleDecrement = (item: any) => {
     console.log(`Decrementing ${item.name}`);
 };
 
-const handleEdit = (item: Item) => {
+const handleEdit = (item: any) => {
     console.log(`Editing ${item.name}`);
 };
 
-const items = [
-    {
-        id: 1,
-        thumbnail: "https://media.istockphoto.com/id/1319656005/vector/cartoon-cheesecake-slice-drawing.jpg?s=612x612&w=0&k=20&c=nlhbS1jfMTirEoLYJJUmzN20FrWRyOW8TXwBroINot0=",
-        name: "Cheesecake",
-        quantity: 1,
-        unit: "slice"
-    },
-    {
-        id: 2,
-        thumbnail: "https://media.istockphoto.com/id/1319656005/vector/cartoon-cheesecake-slice-drawing.jpg?s=612x612&w=0&k=20&c=nlhbS1jfMTirEoLYJJUmzN20FrWRyOW8TXwBroINot0=",
-        name: "Cheesecake",
-        quantity: 1,
-        unit: "slice"
-    },
-    {
-        id: 3,
-        thumbnail: "https://media.istockphoto.com/id/1319656005/vector/cartoon-cheesecake-slice-drawing.jpg?s=612x612&w=0&k=20&c=nlhbS1jfMTirEoLYJJUmzN20FrWRyOW8TXwBroINot0=",
-        name: "Cheesecake",
-        quantity: 1,
-        unit: "slice"
-    }
-];
-
 export default function PantryList() {
+    const [items, setItems] = useState<{ name: string; id: number; thumbnail: string; quantity: number; unit: string; }[]>([]); // Fix for Problem 1
     const [searchText, setSearchText] = useState('');
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +31,29 @@ export default function PantryList() {
             console.log(`No item with the name '${searchText}' exists.`);
         }
     };
+
+    const queryPantryItems = async() => {
+        const pantryItems = await PantryApiService.fetchPantryItems();
+        if (pantryItems) {
+            const newItems = pantryItems.consumables.map((consumable, index) => ({
+                name: consumable.consumableID,
+                id: index,
+                thumbnail: 'https://via.placeholder.com/150',
+                quantity: consumable.quantity,
+                unit: consumable.measurementUnit
+            }));
+            setItems(newItems); // Fix for Problem 2
+            console.log('Pantry items:', pantryItems);
+        } else {
+            console.error('Failed to fetch pantry items:', pantryItems);
+        }
+    };
+
+    useEffect(() => {
+        queryPantryItems().catch((error) => {
+            console.error('Failed to fetch pantry items:', error);
+        });
+    }, []);
 
     return (
         <div>

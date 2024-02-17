@@ -18,7 +18,7 @@ function Copyright(props: TypographyProps<'span', { component?: 'span' }>) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="#">
-        TreeHacks 2024
+        TreeHacks
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

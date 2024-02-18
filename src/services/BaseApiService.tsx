@@ -11,7 +11,7 @@ export class BaseApiService {
   public static get apiService(): AxiosInstance {
     if (BaseApiService._apiService == null) {
       BaseApiService._apiService = axios.create({
-        baseURL: process.env.REACT_APP_BACKEND_URL || 'null.com',
+        baseURL: '',
         headers: {
           'Content-Type': 'application/json'
         }

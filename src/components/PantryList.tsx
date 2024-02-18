@@ -42,7 +42,7 @@ export default function PantryList() {
                 quantity: consumable.quantity,
                 unit: consumable.measurementUnit
             }));
-            setItems(newItems); // Fix for Problem 2
+            setItems(newItems);
             console.log('Pantry items:', pantryItems);
         } else {
             console.error('Failed to fetch pantry items:', pantryItems);

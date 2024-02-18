@@ -4,21 +4,30 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { IRecipeModel } from '../interfaces/IRecipeModel';
 
-export default function RecipeCard() {
+export default function RecipeCard({recipe}: {recipe: IRecipeModel}) {
+  const { RecipeName, Description, Ingredients, Instructions } = recipe;
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="https://media.istockphoto.com/id/1319656005/vector/cartoon-cheesecake-slice-drawing.jpg?s=612x612&w=0&k=20&c=nlhbS1jfMTirEoLYJJUmzN20FrWRyOW8TXwBroINot0="
-        title="green iguana"
+        image="https://source.unsplash.com/random"
+        title={RecipeName}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {RecipeName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lorem Ipsum Dolor
+          {Description}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {Ingredients.map((ingredient) => `${ingredient.ingredientName}: ${ingredient.quantity} ${ingredient.measurementUnit}`).join(', ') }
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {Instructions}
         </Typography>
       </CardContent>
       <CardActions>

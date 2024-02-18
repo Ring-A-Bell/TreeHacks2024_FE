@@ -12,4 +12,13 @@ export class PantryApiService extends BaseApiService {
             throw new Error('Failed to fetch pantry items');
         }
     }
+
+    public static async addConsumable(consumable: object): Promise<boolean> {
+        const response = await super.putData(this.endpoint, { consumable });
+        if (response) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

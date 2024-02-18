@@ -24,6 +24,29 @@ export default function PantryList() {
         setSearchText(event.target.value);
     };
 
+    const handleAddConsumable = async () => {
+        const newConsumableName = prompt('Enter the name of the new consumable:');
+        const newConsumableQuantity = prompt('Enter the quantity of the new consumable:');
+        const newConsumableUnit = prompt('Enter the unit of measurement for the new consumable:');
+        
+        if (newConsumableName && newConsumableQuantity && newConsumableUnit) {
+            try {
+                const res = {consumableID: newConsumableName, quantity: newConsumableQuantity, measurementUnit: newConsumableUnit};
+                console.log("Sending this, ", res);
+                const response = await PantryApiService.addConsumable(res);
+                if (response) {
+                    console.log(`Successfully added ${newConsumableName}`);
+                    // Refresh the pantry items after adding a new consumable
+                    queryPantryItems();
+                } else {
+                    console.error(`Failed to add ${newConsumableName}`);
+                }
+            } catch (error) {
+                console.error(`Failed to add ${newConsumableName}:`, error);
+            }
+        }
+    };
+
     const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()));
 
     const handleSearch = () => {
@@ -65,6 +88,7 @@ export default function PantryList() {
                 fullWidth
                 margin="normal"
             />
+            <Button variant="contained" color="primary" onClick={handleAddConsumable}>Add new Ingredient</Button>
             <TableContainer style={{ display: 'flex', justifySelf: 'center', justifyContent: 'center' }}>
                 <Table>
                     <TableHead>

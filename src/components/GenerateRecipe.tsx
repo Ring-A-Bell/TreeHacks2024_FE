@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, FormGroup, TextField, Button } from '@mui/material';
+import { Card, FormGroup, TextField, Button, Box } from '@mui/material';
 import { PantryApiService } from '../services/PantryApiService';
 import RecipeCard from './RecipeCard';
 import { IRecipeModel } from '../interfaces/IRecipeModel';
@@ -48,8 +48,8 @@ export default function GenerateRecipe() {
     };
 
     return (
-        <>
-            <Card style={{width: 500, alignContent: 'center'}}>
+        <Box display="flex" alignItems="center" justifyContent="center" minHeight="100vh">
+            <Card style={{ width: 500 }}>
                 <form onSubmit={handleSubmit}>
                     <FormGroup>
                         <TextField
@@ -67,6 +67,6 @@ export default function GenerateRecipe() {
             {recipe && (
                 <RecipeCard recipe={recipe} />
             )}
-        </>
+        </Box>
     );
 };
